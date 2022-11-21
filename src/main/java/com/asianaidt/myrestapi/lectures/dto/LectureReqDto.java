@@ -1,4 +1,4 @@
-package com.asianaidt.myrestapi.lectures;
+package com.asianaidt.myrestapi.lectures.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
