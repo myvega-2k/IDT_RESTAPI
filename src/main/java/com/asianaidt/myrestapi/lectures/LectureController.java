@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -28,7 +30,11 @@ public class LectureController {
 //    }
 
     @PostMapping
-    public ResponseEntity createLecture(@RequestBody LectureReqDto lectureReqDto) {
+    public ResponseEntity createLecture(@RequestBody @Valid LectureReqDto lectureReqDto, Errors errors) {
+        //입력항목에 오류가 있는지 체크합니다.
+        if(errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors);
+        }
         //ReqDTO -> Entity로 매핑
         Lecture lecture = modelMapper.map(lectureReqDto, Lecture.class);
         Lecture addLecture = lectureRepository.save(lecture);
