@@ -20,12 +20,12 @@ public class DatabaseRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        log.debug("DBCP 구현객체 클래스이름 = {} ", dataSource.getClass().getName());
+        log.info("DBCP 구현객체 클래스이름 = {} ", dataSource.getClass().getName());
         try (Connection connection = dataSource.getConnection()) {
             DatabaseMetaData metaData = connection.getMetaData();
-            log.debug("DB Product = {}", metaData.getDatabaseProductName());
-            log.debug("DB URL = {}", metaData.getURL());
-            log.debug("DB Username = {}",metaData.getUserName());
+            log.info("DB Product = {}", metaData.getDatabaseProductName());
+            log.info("DB URL = {}", metaData.getURL());
+            log.info("DB Username = {}",metaData.getUserName());
         }
     }
 }
