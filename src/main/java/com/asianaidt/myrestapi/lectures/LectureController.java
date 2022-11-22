@@ -73,8 +73,9 @@ public class LectureController {
     public ResponseEntity queryLectures(Pageable pageable, PagedResourcesAssembler<LectureResDto> assembler) {
         Page<Lecture> lecturePage = this.lectureRepository.findAll(pageable);
         //<U> Page<U> map(Function<? super T, ? extends U> converter);
+        //Page<Lecture> ==> Page<LectureResDto>
         Page<LectureResDto> lectureResDtoPage =
-                lecturePage.map(entity -> modelMapper.map(entity, LectureResDto.class));//Page<LectureResDto>
+                lecturePage.map(entity -> modelMapper.map(entity, LectureResDto.class));
         PagedModel<EntityModel<LectureResDto>> pagedModel = assembler.toModel(lectureResDtoPage);
         return ResponseEntity.ok(pagedModel);
     }
