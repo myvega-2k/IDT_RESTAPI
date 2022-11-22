@@ -18,6 +18,10 @@ public class LambdaTest {
                 System.out.println("s = " + s);
             }
         });
+        //Lambda Expression
+        strList.forEach(val -> System.out.println(val));
+        //Method Reference
+        strList.forEach(System.out::println);
 
     }
     
