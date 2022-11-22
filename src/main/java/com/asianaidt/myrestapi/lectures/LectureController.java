@@ -60,7 +60,6 @@ public class LectureController {
         //Resource와 Link를 모두 전달하기 위해서 ResDTO를  Resource 객체에 저장한다.
         LectureResource lectureResource = new LectureResource(lectureResDto);
         lectureResource.add(linkTo(LectureController.class).withRel("query-lectures"));
-        lectureResource.add(selfLinkBuilder.withSelfRel());
         lectureResource.add(selfLinkBuilder.withRel("update-lecture"));
 
         //created() - 201 code
