@@ -1,5 +1,6 @@
 package com.asianaidt.myrestapi.customers;
 
+import com.asianaidt.myrestapi.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,12 @@ public class CustomerService {
 
     public CustomerEntity updateCustomer(CustomerEntity entity) throws Exception {
         Optional<CustomerEntity> optional = customerRepository.findByEmail(entity.getEmail());
-
+        CustomerEntity existCustomer =
+                optional.orElseThrow(() -> new ResourceNotFoundException("CustomerEntity","email",entity.getEmail()));
+        //Entity 수정
+        existCustomer.setName(entity.getName());
+        existCustomer.setAge(entity.getAge());
+        return existCustomer;
     }
 
 
