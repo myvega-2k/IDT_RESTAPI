@@ -12,7 +12,7 @@ public class IndexController {
     @GetMapping("/api")
     public RepresentationModel index() {
         var index = new RepresentationModel();
-        index.add(linkTo(LectureController.class).withRel("Lectures"));
+        index.add(linkTo(LectureController.class).withRel("lectures"));
         return index;
     }
 }
