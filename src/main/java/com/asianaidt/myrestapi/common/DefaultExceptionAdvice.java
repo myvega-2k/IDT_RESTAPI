@@ -3,6 +3,7 @@ package com.asianaidt.myrestapi.common;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.asianaidt.myrestapi.common.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,18 @@ import org.springframework.web.client.ResourceAccessException;
 @ControllerAdvice
 public class DefaultExceptionAdvice {
     private final Logger LOGGER = LoggerFactory.getLogger(DefaultExceptionAdvice.class);
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleException(ResourceNotFoundException e) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        //result.put("message", e.getMessage());
+        result.put("message", "요청하신 Resource 가 존재하지 않습니다.");
+        result.put("httpStatus", HttpStatus.NOT_FOUND);
+
+        LOGGER.error(e.getMessage(), e);
+        return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+    }
+
 
     //숫자타입에 문자열이 입력된 경우
     @ExceptionHandler(HttpMessageNotReadableException.class)
