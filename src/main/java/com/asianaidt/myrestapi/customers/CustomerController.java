@@ -40,4 +40,9 @@ public class CustomerController {
         return ResponseEntity.ok(existCustomer);
     }
 
+    @PatchMapping
+    public CustomerEntity modifyCustomer(@RequestBody CustomerEntity customer) throws Exception{
+        return customerService.updateCustomer(customer);
+    }
+
 }
