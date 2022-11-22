@@ -17,9 +17,9 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<?> addCustomer(@RequestBody CustomerEntity customer)
             throws Exception {
-        Optional<CustomerEntity> optional = customerService.selectCustomerByEmail(customer.getEmail());
+
         if(optional.isPresent()){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("요청하신 " + customer.getEmail()+"이미 존재합니다.");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("요청하신 " + customer.getEmail()+"은 이미 존재합니다.");
         }
         CustomerEntity addedCustomer = customerService.insertCustomer(customer);
         return ResponseEntity.ok(addedCustomer);
@@ -28,6 +28,11 @@ public class CustomerController {
     @GetMapping
     public List<CustomerEntity> getCustomers() throws Exception {
         return customerService.selectCustomers();
+    }
+
+    @GetMapping("/{emailAddr}")
+    public ResponseEntity<?> getCustomer(@PathVariable("emailAddr") String email) throws Exception {
+        Optional<CustomerEntity> optional = customerService.selectCustomerByEmail(email);
     }
 
 }
