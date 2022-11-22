@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -73,8 +75,8 @@ public class LectureController {
         //<U> Page<U> map(Function<? super T, ? extends U> converter);
         Page<LectureResDto> lectureResDtoPage =
                 lecturePage.map(entity -> modelMapper.map(entity, LectureResDto.class));//Page<LectureResDto>
-
-        return ResponseEntity.ok();
+        PagedModel<EntityModel<LectureResDto>> pagedModel = assembler.toModel(lectureResDtoPage);
+        return ResponseEntity.ok(pagedModel);
     }
 
     private ResponseEntity badRequest(Errors errors) {
