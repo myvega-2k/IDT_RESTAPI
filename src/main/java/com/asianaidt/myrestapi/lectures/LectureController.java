@@ -1,5 +1,6 @@
 package com.asianaidt.myrestapi.lectures;
 
+import com.asianaidt.myrestapi.common.ErrorsResource;
 import com.asianaidt.myrestapi.lectures.dto.LectureReqDto;
 import com.asianaidt.myrestapi.lectures.dto.LectureResDto;
 import lombok.RequiredArgsConstructor;
@@ -67,6 +68,7 @@ public class LectureController {
     }
 
     private ResponseEntity badRequest(Errors errors) {
-        return ResponseEntity.badRequest().body(errors);
+
+        return ResponseEntity.badRequest().body(new ErrorsResource(errors));
     }
 }
