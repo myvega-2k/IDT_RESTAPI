@@ -17,7 +17,7 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<?> addCustomer(@RequestBody CustomerEntity customer)
             throws Exception {
-
+        Optional<CustomerEntity> optional = customerService.selectCustomerByEmail(customer.getEmail());
         if(optional.isPresent()){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("요청하신 " + customer.getEmail()+"은 이미 존재합니다.");
         }
@@ -33,6 +33,10 @@ public class CustomerController {
     @GetMapping("/{emailAddr}")
     public ResponseEntity<?> getCustomer(@PathVariable("emailAddr") String email) throws Exception {
         Optional<CustomerEntity> optional = customerService.selectCustomerByEmail(email);
+        if(!optional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("요청하신 " + email+"이 존재하지 않습니다.");
+        }
+
     }
 
 }
