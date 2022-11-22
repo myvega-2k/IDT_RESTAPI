@@ -45,4 +45,9 @@ public class CustomerController {
         return customerService.updateCustomer(customer);
     }
 
+    @DeleteMapping("/{email}")
+    public ResponseEntity<String> removeCustomer(@PathVariable String email) throws Exception {
+        customerService.deleteCustomer(email);
+        return ResponseEntity.ok("요청하신 " + email + "이 삭제처리 되었습니다.");
+    }
 }

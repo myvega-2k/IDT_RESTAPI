@@ -38,6 +38,15 @@ public class CustomerService {
         return existCustomer;
     }
 
+    public void deleteCustomer(String email)throws Exception {
+        Optional<CustomerEntity> optional = customerRepository.findByEmail(email);
+        CustomerEntity existCustomer =
+                optional.orElseThrow(() -> new ResourceNotFoundException("CustomerEntity","email",email));
+
+        customerRepository.delete(existCustomer);
+
+    }
+
 
 
 
