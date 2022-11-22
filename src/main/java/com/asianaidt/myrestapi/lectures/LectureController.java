@@ -6,14 +6,14 @@ import com.asianaidt.myrestapi.lectures.dto.LectureResDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -65,6 +65,16 @@ public class LectureController {
 
         //created() - 201 code
         return ResponseEntity.created(createUri).body(lectureResource);
+    }//createLecture
+
+    @GetMapping
+    public ResponseEntity queryLectures(Pageable pageable, PagedResourcesAssembler<LectureResDto> assembler) {
+        Page<Lecture> lecturePage = this.lectureRepository.findAll(pageable);
+        //<U> Page<U> map(Function<? super T, ? extends U> converter);
+        Page<LectureResDto> lectureResDtoPage =
+                lecturePage.map(entity -> modelMapper.map(entity, LectureResDto.class));//Page<LectureResDto>
+
+        return ResponseEntity.ok();
     }
 
     private ResponseEntity badRequest(Errors errors) {
