@@ -31,7 +31,8 @@ public class LectureController {
 //    }
 
     @PostMapping
-    public ResponseEntity createLecture(@RequestBody @Valid LectureReqDto lectureReqDto, Errors errors) {
+    public ResponseEntity createLecture(@RequestBody @Valid LectureReqDto lectureReqDto, Errors errors)
+            throws Exception {
         //입력항목에 오류가 있는지 체크합니다.
         if(errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors);
