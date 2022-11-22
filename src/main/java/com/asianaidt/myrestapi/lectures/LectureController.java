@@ -23,6 +23,7 @@ public class LectureController {
     //@Autowired
     private final LectureRepository lectureRepository;
     private final ModelMapper modelMapper;
+    private final LectureValidator lectureValidator;
 
     //constructor injection
 //    public LectureController(LectureRepository lectureRepository) {
@@ -35,6 +36,12 @@ public class LectureController {
         if(errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors);
         }
+        //biz logic 입력항목 오류 체크
+        lectureValidator.validate(lectureReqDto, errors);
+        if(errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors);
+        }
+
         //ReqDTO -> Entity로 매핑
         Lecture lecture = modelMapper.map(lectureReqDto, Lecture.class);
         Lecture addLecture = lectureRepository.save(lecture);
