@@ -35,12 +35,12 @@ public class LectureController {
             throws Exception {
         //입력항목에 오류가 있는지 체크합니다.
         if(errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(errors);
+            return badRequest(errors);
         }
         //biz logic 입력항목 오류 체크
         lectureValidator.validate(lectureReqDto, errors);
         if(errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(errors);
+            return badRequest(errors);
         }
 
         //ReqDTO -> Entity로 매핑
@@ -52,5 +52,9 @@ public class LectureController {
         URI createUri = selfLinkBuilder.toUri();
         //created() - 201 code
         return ResponseEntity.created(createUri).body(addLecture);
+    }
+
+    private ResponseEntity badRequest(Errors errors) {
+        return ResponseEntity.badRequest().body(errors);
     }
 }

@@ -41,10 +41,10 @@ public class LectureReqDto {
 
     private String location;
 
-    @Min(100)
+    @Min(0)
     private int basePrice;
 
-    @Min(1000)
+    @Min(0)
     private int maxPrice;
 
     @Min(5)

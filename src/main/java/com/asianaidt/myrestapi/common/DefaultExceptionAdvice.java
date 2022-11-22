@@ -22,7 +22,8 @@ public class DefaultExceptionAdvice {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ResponseEntity<Object> handleException(HttpMessageNotReadableException e) {
         Map<String, Object> result = new HashMap<String, Object>();
-        result.put("message", e.getMessage());
+        //result.put("message", e.getMessage());
+        result.put("message", "숫자 타입의 값만 가능합니다.");
         result.put("httpStatus", HttpStatus.BAD_REQUEST.value());
 
         LOGGER.error(e.getMessage(), e);
