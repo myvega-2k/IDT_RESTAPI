@@ -1,11 +1,9 @@
 package com.asianaidt.myrestapi.customers;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/customers")
@@ -14,7 +12,15 @@ public class CustomerController {
     private CustomerService customerService;
 
     @PostMapping
-    public CustomerEntity addCustomer(@RequestBody CustomerEntity customer) {
+    public CustomerEntity addCustomer(@RequestBody CustomerEntity customer)
+            throws Exception {
+
         return customerService.insertCustomer(customer);
     }
+
+    @GetMapping
+    public List<CustomerEntity> getCustomers() throws Exception {
+        return customerService.selectCustomers();
+    }
+
 }
