@@ -30,13 +30,14 @@ public class CustomerController {
         return customerService.selectCustomers();
     }
 
-    @GetMapping("/{emailAddr}")
+    @GetMapping("/{emailAddr}")  //http://localhost:8080/customers/aa@abc.com/
     public ResponseEntity<?> getCustomer(@PathVariable("emailAddr") String email) throws Exception {
         Optional<CustomerEntity> optional = customerService.selectCustomerByEmail(email);
         if(!optional.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("요청하신 " + email+"이 존재하지 않습니다.");
         }
-
+        CustomerEntity existCustomer = optional.get();
+        return ResponseEntity.ok(existCustomer);
     }
 
 }

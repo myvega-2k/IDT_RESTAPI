@@ -27,5 +27,12 @@ public class CustomerService {
         return customerRepository.findByEmail(email);
     }
 
+    public CustomerEntity updateCustomer(CustomerEntity entity) throws Exception {
+        Optional<CustomerEntity> optional = customerRepository.findByEmail(entity.getEmail());
+
+    }
+
+
+
 
 }
